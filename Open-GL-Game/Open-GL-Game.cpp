@@ -68,9 +68,9 @@ int main()
 
     // ------ Create Array Buffer on the GPU and copy our vertics on GPU
     float vertices[] = {
-        -0.5f, -0.5f, 0.0f,
-        0.5f, -0.5f, 0.0f,
-        0.0f, 0.5f, 0.0f
+        -1.0f, -0.5f, 0.0f,
+        0.0f, -0.5f, 0.0f,
+        -0.5f, 0.5f, 0.0f
     };
 
     unsigned int VBO; // variable to store buffer id
@@ -91,9 +91,9 @@ int main()
 
     // ------ Create Array Buffer on the GPU and copy our vertics on GPU
     float vertices2[] = {
-        0.5f, -0.5f, 0.0f,
+        0.0f, -0.5f, 0.0f,
         1.0f, -0.5f, 0.0f,
-        0.75f, 0.5f, 0.0f
+        0.5f, 0.5f, 0.0f
     };
 
     unsigned int VBO2; // variable to store buffer id
@@ -107,17 +107,16 @@ int main()
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 
-    const char* vertexShaderSource = "#version 330 core\n"
+    const char* vertexShaderSource{ "#version 330 core\n"
         "layout (location = 0) in vec3 aPos;\n"
         "void main()\n"
         "{\n"
         "gl_Position = vec4 (aPos.x, aPos.y, aPos.x, 1.0f);\n"
-        "}\0";
+        "}\0" };
 
     
-    unsigned int vertexShader;
-    vertexShader = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
+    unsigned int vertexShader { glCreateShader(GL_VERTEX_SHADER) };
+    glShaderSource(vertexShader, 1, &vertexShaderSource, nullptr);
     glCompileShader(vertexShader);
 
     {
@@ -126,25 +125,25 @@ int main()
         glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
         if (!success)
         {
-            glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
+            glGetShaderInfoLog(vertexShader, 512, nullptr, infoLog);
             std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
         }
     }
 
     // Compile the Fragment Shader on the GPU
-    const char* orangeFragmentShaderSource = "#version 330 core\n"
+    const char* orangeFragmentShaderSource{ "#version 330 core\n"
         "out vec4 FragColor;\n"
         "void main()\n"
         "{\n"
         "    FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
-        "} \0";
+        "} \0" };
 
-    const char* newColorFragmentShaderSource = "#version 330 core\n"
+    const char* newColorFragmentShaderSource{ "#version 330 core\n"
         "out vec4 FragColor;\n"
         "void main()\n"
         "{\n"
         "FragColor = vec4(0.2f, 1.f, 0.2f, 1.0f);\n"
-        "}\0";
+        "}\0" };
 
     unsigned int orangeFragmentShader;
     orangeFragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
@@ -168,8 +167,7 @@ int main()
     }
 
     // Create a Shader Program (Render Pipeline)
-    unsigned int orangeShaderProgram;
-    orangeShaderProgram = glCreateProgram();
+    unsigned int orangeShaderProgram { glCreateProgram() };
     glAttachShader(orangeShaderProgram, vertexShader);
     glAttachShader(orangeShaderProgram, orangeFragmentShader);
     glLinkProgram(orangeShaderProgram);
@@ -179,13 +177,12 @@ int main()
         char infoLog[512];
         glGetProgramiv(orangeShaderProgram, GL_LINK_STATUS, &success);
         if (!success) {
-            glGetProgramInfoLog(orangeShaderProgram, 512, NULL, infoLog);
+            glGetProgramInfoLog(orangeShaderProgram, 512, nullptr, infoLog);
             std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
         }
     }
 
-    unsigned int newColorShaderProgram;
-    newColorShaderProgram = glCreateProgram();
+    unsigned int newColorShaderProgram { glCreateProgram() };
     glAttachShader(newColorShaderProgram, vertexShader);
     glAttachShader(newColorShaderProgram, newColorFragmentShader);
     glLinkProgram(newColorShaderProgram);

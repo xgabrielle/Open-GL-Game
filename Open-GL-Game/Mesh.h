@@ -4,9 +4,11 @@
 class Mesh
 {
     unsigned int VAO;
+    size_t vertexCount;
 public:
 	Mesh(float* vertices, size_t count)
 	{
+        vertexCount = count / 3;
         // ----- Create Vertex Array Object, which makes changing between VBOs easier -----
         glGenVertexArrays(1, &VAO);
         glBindVertexArray(VAO);
@@ -25,9 +27,11 @@ public:
         glEnableVertexAttribArray(0);
 	}
 
-    void use()
+    void render()
     {
         glBindVertexArray(VAO);
+        glDrawArrays(GL_TRIANGLES, 0, vertexCount);
+
     }
 };
 

@@ -5,6 +5,8 @@
 #include "Window.h"
 #include "Mesh.h"
 #include "Shader.h"
+#include "Material.h"
+#include "Triangle.h"
 using namespace std;
 
 void processInput(GLFWwindow*);
@@ -17,11 +19,12 @@ int main() {
 
     // ==================================================================
     // The Real Program starts here
-    float red{};
+    
     float vertices[]{
              -1.0f, -0.5f, 0.0f,
               0.0f, -0.5f, 0.0f,
              -0.5f,  0.5f, 0.0f,
+
              -1.0f, -0.5f, 0.0f,
              -0.5f,  0.5f, 0.0f,
              -1.0f, 0.5f, 0.0f
@@ -60,55 +63,24 @@ int main() {
         "{\n"
         "    FragColor = vec4(1.0f, 1.0f, 0.0f, 1.0f);\n"
         "} \0" }, GL_FRAGMENT_SHADER };
+  
+    Material orange{vertexShader, orangeShader};
+    Material yellow{ vertexShader, yellowShader };
 
 
-
-    // -------- Create Orange Shader Program (Render Pipeline) ---------
-    unsigned int orangeShaderProgram;
-    orangeShaderProgram = glCreateProgram();
-    glAttachShader(orangeShaderProgram, vertexShader.shaderId);
-    glAttachShader(orangeShaderProgram, orangeShader.shaderId);
-    glLinkProgram(orangeShaderProgram);
-
-    // -------- Create Yellow Shader Program (Render Pipeline) ---------
-    unsigned int yellowShaderProgram;
-    yellowShaderProgram = glCreateProgram();
-    glAttachShader(yellowShaderProgram, vertexShader.shaderId);
-    glAttachShader(yellowShaderProgram, yellowShader.shaderId);
-    glLinkProgram(yellowShaderProgram);
-
-    // clean up shaders after they've been linked into a program
-    
-
-
-
+    Triangle a{ &orange, &mesh1 };
+    Triangle b{ &yellow, &mesh2 };
 
     // While the User doesn't want to Quit (X Button, Alt+F4)
     while (!window.shouldClose())
     {
-        // process input (e.g. close window on Esc)
-        
-       
+      
         window.processInput();
         window.present();
 
-        red += 0.0001f;
-        if (red > 1)
-            red -= 1;
+        a.render();
+        b.render();
 
-        // render (paint the current frame of the game)
-        glClearColor(red, 0.3f, 0.3f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
-
-        glUseProgram(orangeShaderProgram);
-        mesh1.render();
-        
-
-        glUseProgram(yellowShaderProgram);
-        mesh2.render();
-        glDrawArrays(GL_TRIANGLES, 0, 3);
-
-       
     }
     // Cleans up all the GLFW stuff
     glfwTerminate();

@@ -5,15 +5,15 @@ class Shader
 
 public:
     unsigned int shaderId;
-	Shader(const char* source, int shaderType) // when constructed: load shader on GPU
+	Shader(const char* source, int shaderType) 
 	{   
         shaderId = { glCreateShader(shaderType) };
         glShaderSource(shaderId, 1, &source, nullptr);
         glCompileShader(shaderId);
 	}
 
-    Shader (const Shader&) = delete; // avoid being cloned
-    ~Shader() // when destructed: delete the shader from GPU
+    Shader (const Shader&) = delete; 
+    ~Shader() 
     {
         glDeleteShader(shaderId);
     }

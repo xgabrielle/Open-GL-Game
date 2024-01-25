@@ -72,5 +72,20 @@ public:
         // Initialization ends here
         success = true; // We set success to be true
     }
+    bool shouldClose()
+    {
+        return glfwWindowShouldClose(this->window);
+    }
+
+    void  present()
+    {
+        glfwSwapBuffers(this->window);
+    }
+    void processInput()
+    {
+        glfwPollEvents();
+        if (glfwGetKey(this->window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+            glfwSetWindowShouldClose(window, true);
+    }
 };
 

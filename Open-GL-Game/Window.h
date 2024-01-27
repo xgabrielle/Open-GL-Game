@@ -9,9 +9,6 @@ using namespace std;
 
 class Window
 {
-
-    // We made these method static to make them compatible
-    // With the GLFW Callbacks (because they don't support this->)
     static void framebuffer_size_callback(GLFWwindow* window, int width, int height)
     {
         glViewport(0, 0, width, height);
@@ -22,31 +19,24 @@ class Window
     }
 
 public:
-    // public GLFWwindow* as a hacky workaround so that
-    // our main() can still use it for rendering and input
+    
     GLFWwindow* window;
-    // we introduced a bool to show whether creating the window
-    // was successful or not
     bool success{};
+
     Window(int width, int height) {
         glfwSetErrorCallback(error_callback);
 
-        // Initialize GLFW
-        if (!glfwInit()) { // Exit, if it failed
+        
+        if (!glfwInit()) 
+        {
             cout << "Failed to init GLFW" << endl;
-            return; // We don't return -1 anymore, instead we leave success at false
+            return;
         }
 
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-#if __APPLE__
-        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-#endif
 
-        // Request Window from Operating System
-        // And assign it to public class variable, so it can 
-        // be accessed from the outside
         window = glfwCreateWindow(800, 600,
             "LearnOpenGL", nullptr, nullptr);
 
@@ -58,7 +48,6 @@ public:
         }
         glfwMakeContextCurrent(window);
 
-        // Initialize GLAD (connects OpenGL Functions)
         if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
         {
             cout << "Failed to initialize GLAD" << endl;
@@ -69,8 +58,7 @@ public:
         glfwGetFramebufferSize(window, &width, &height);
         glViewport(0, 0, width, height);
 
-        // Initialization ends here
-        success = true; // We set success to be true
+        success = true;
     }
     bool shouldClose()
     {
@@ -89,7 +77,7 @@ public:
     }
     void clear()
     {
-        glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
+        glClearColor(0.0f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
     }
 };

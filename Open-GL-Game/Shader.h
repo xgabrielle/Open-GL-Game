@@ -51,11 +51,9 @@ class Shader
 
 public:
     unsigned int shaderId;
-	Shader(const char* source, int shaderType) 
+	Shader(const char* filePath, int shaderType) 
 	{   
-        shaderId = { glCreateShader(shaderType) };
-        glShaderSource(shaderId, 1, &source, nullptr);
-        glCompileShader(shaderId);
+        shaderId = compileShaderFromFile(filePath, shaderType);
 	}
 
     Shader (const Shader&) = delete; 

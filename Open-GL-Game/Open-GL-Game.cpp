@@ -36,9 +36,9 @@ int main() {
 
     Shader vertexShader{ "vertexShader.glsl", GL_VERTEX_SHADER };
 
-    Shader orangeShader{ "OrangeFRagmentShader", GL_FRAGMENT_SHADER};
+    Shader orangeShader{ "OrangeFragmentShader.glsl", GL_FRAGMENT_SHADER};
 
-    Shader yellowShader{"OrangeFragmentShader", GL_FRAGMENT_SHADER };
+    Shader yellowShader{"OrangeFragmentShader.glsl", GL_FRAGMENT_SHADER };
   
     Material orange{vertexShader, orangeShader};
     Material yellow{ vertexShader, yellowShader };
@@ -49,10 +49,12 @@ int main() {
     while (!window.shouldClose())
     {
         window.processInput();
-        window.present();
+        window.clear();
 
         a.render();
         b.render();
+
+        window.present();
     }
 
     glfwTerminate();

@@ -4,9 +4,9 @@
 
 class Material
 {
-	unsigned int shaderProgram;
-public:
 	
+public:
+	unsigned int shaderProgram;
 	Material(Shader& vertexShader, Shader& fragmentShader)
 	{
 		

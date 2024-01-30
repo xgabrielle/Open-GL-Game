@@ -54,4 +54,8 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="vertexShader.glsl" />
+    <None Include="OrangeFragmentShader.glsl" />
+  </ItemGroup>
 </Project>

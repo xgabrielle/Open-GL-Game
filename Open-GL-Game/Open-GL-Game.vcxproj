@@ -71,11 +71,19 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)ext\glfw-3.3.9.bin.WIN64\include;$(SolutionDir)ext\glad\include\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)ext\glfw-3.3.9.bin.WIN64\include;$(SolutionDir)ext\glad\include\;$(SolutionDir)ext\stb\include\;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)ext\glfw-3.3.9.bin.WIN64\lib-vc2022;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)ext\glfw-3.3.9.bin.WIN64\include;$(SolutionDir)ext\glad\include\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)ext\glfw-3.3.9.bin.WIN64\include;$(SolutionDir)ext\glad\include\;$(SolutionDir)ext\stb\include\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)ext\glfw-3.3.9.bin.WIN64\lib-vc2022;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>$(SolutionDir)ext\glfw-3.3.9.bin.WIN64\include;$(SolutionDir)ext\glad\include\;$(SolutionDir)ext\stb\include\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)ext\glfw-3.3.9.bin.WIN64\lib-vc2022;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>$(SolutionDir)ext\glfw-3.3.9.bin.WIN64\include;$(SolutionDir)ext\glad\include\;$(SolutionDir)ext\stb\include\;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)ext\glfw-3.3.9.bin.WIN64\lib-vc2022;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -142,6 +150,7 @@
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Open-GL-Game.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="stb.cpp" />
     <ClCompile Include="Triangle.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
@@ -154,6 +163,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="OrangeFragmentShader.glsl" />
+    <None Include="TextureFragmentShader.glsl" />
     <None Include="vertexShader.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

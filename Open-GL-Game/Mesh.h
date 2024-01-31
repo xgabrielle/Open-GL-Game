@@ -6,11 +6,16 @@ struct Vector3
 {
     float x, y, z;
 };
+struct Vector2
+{
+    float x, y;
+};
 struct Color
 {
     const static Color red;
     const static Color blue;
     const static Color green;
+    const static Color yellow;
     float r, g, b, a;
 };
 
@@ -19,6 +24,7 @@ struct Vertex
 {
     Vector3 pos;
     Color col{1,1,1,1};
+    Vector2 uv;
 
 };
 
@@ -48,7 +54,11 @@ public:
         glEnableVertexAttribArray(0);
         glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, col));
         glEnableVertexAttribArray(1);
-	}
+        glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, uv));
+        glEnableVertexAttribArray(2);
+        
+    }
+	
 
     void render()
     {

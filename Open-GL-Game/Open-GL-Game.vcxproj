@@ -162,6 +162,7 @@
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="BlendTextureFragmentShader.glsl" />
     <None Include="OrangeFragmentShader.glsl" />
     <None Include="TextureFragmentShader.glsl" />
     <None Include="vertexShader.glsl" />

@@ -61,5 +61,6 @@
     <None Include="vertexShader.glsl" />
     <None Include="OrangeFragmentShader.glsl" />
     <None Include="TextureFragmentShader.glsl" />
+    <None Include="BlendTextureFragmentShader.glsl" />
   </ItemGroup>
 </Project>

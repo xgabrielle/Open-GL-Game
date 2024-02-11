@@ -16,7 +16,7 @@ void processInput(GLFWwindow*);
 
 int main() {
 
-    Window window{ 800,600 };
+    Window window{ 800,600 }; // GLFW, GLAD, 
 
     Texture container{ "container.jpg", GL_TEXTURE0};
 

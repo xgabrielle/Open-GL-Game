@@ -1,3 +1,4 @@
+#define _USE_MATH_DEFINES
 
 #include <iostream>
 #include "glad/glad.h"
@@ -9,6 +10,7 @@
 #include "Triangle.h"
 #include "stb_image.h"
 #include "Texture.h"
+#include <math.h>
 
 using namespace std;
 
@@ -16,13 +18,10 @@ void processInput(GLFWwindow*);
 
 int main() {
 
-    Window window{ 800,600 }; // GLFW, GLAD, 
+    Window window{ 800,600 };
 
-    Texture container{ "container.jpg", GL_TEXTURE0};
-
-    //stbi_set_flip_vertically_on_load(true);
-    Texture wall{ "wall.jpg", GL_TEXTURE1};
-
+    Texture container{ "container.jpg",GL_TEXTURE0 };
+    Texture wall{ "wall.jpg", GL_TEXTURE1 };
 
     Vertex vertices[]{
            Vertex{Vector3{-1.0f, -0.5f, 0.0f}},
@@ -58,6 +57,7 @@ int main() {
 
     Shader vertexShader{ "vertexShader.glsl", GL_VERTEX_SHADER };
 
+
     Shader orangeShader{
         "orangeFragmentShader.glsl", GL_FRAGMENT_SHADER
     };
@@ -66,37 +66,34 @@ int main() {
         "orangeFragmentShader.glsl", GL_FRAGMENT_SHADER
     };
 
-    Shader textureShader{
-        "TextureFragmentShader.glsl", GL_FRAGMENT_SHADER
+    Shader textureFragmentShader{
+        "blendTexturesFragmentShader.glsl", GL_FRAGMENT_SHADER
     };
 
 
     // -------- Create Orange Shader Program (Render Pipeline) ---------
     Material orange{ vertexShader, orangeShader };
     Material yellow{ vertexShader, yellowShader };
-    Material textured{ vertexShader, textureShader };
+    Material textured{ vertexShader, textureFragmentShader };
 
     Triangle a{ &orange, &mesh1 };
     a.red = 1;
     Triangle b{ &orange, &mesh2 };
     b.red = 0.5f;
-
     Triangle c{ &textured, &mesh3, &container };
-
-    c.offsetX =  0.5f;
-
-    Triangle d{ &textured, &mesh3, &wall};
-
-    d.offsetX = -0.5f;
-
-    //glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
-
-    // While the User doesn't want to Quit (X Button, Alt+F4)
-    while (!window.shouldClose()) // window -> window.window
+    c.position = Vector3(-0.75f, 0, 0);
+    
+    Triangle d{ &textured, &mesh3, &wall };
+    d.position = Vector3(0.75f, 0, 0);
+    
+    while (!window.shouldClose()) 
     {
         window.processInput();
 
         window.clear();
+
+        d.rotation.y = glfwGetTime();
+        c.rotation.z = glfwGetTime();
 
         a.render();
         b.render();
@@ -104,7 +101,6 @@ int main() {
         //c.horizontalOffset = cos(glfwGetTime());
 
         c.render();
-
         d.render();
 
         window.present();
@@ -113,4 +109,3 @@ int main() {
     glfwTerminate();
     return 0;
 }
-

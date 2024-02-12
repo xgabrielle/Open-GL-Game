@@ -5,17 +5,18 @@
 #include "Texture.h"
 #include "../Maths/Matrix4x4.h"
 
-class Triangle
+class GameObject
 {
-    Mesh* mesh;
-    Material* material;
-    Texture* texture;
+    const Mesh* mesh{};
+    Material* material{};
+    Texture* texture{};
+    
 
 public:
     float red;
     Vector3 position = Vector3(0, 0, 0);
     Vector3 rotation = Vector3(0, 0, 0);
-    Triangle(Material* _material, Mesh* _mesh, Texture* _texture = nullptr) {
+    GameObject(Material* _material, const Mesh* _mesh, Texture* _texture = nullptr) {
         mesh = _mesh;
         material = _material;
         texture = _texture;
@@ -51,9 +52,9 @@ public:
             glBindTexture(GL_TEXTURE_2D, 0);
         }
 
-        int blendLocation = glGetUniformLocation(
-            material->shaderProgram, "blendTexture");
-        glUniform1i(blendLocation, 1);
+        int textureLocation = glGetUniformLocation(
+            material->shaderProgram, "textureShader");
+        glUniform1i(textureLocation, 1);
 
         mesh->render();
     }

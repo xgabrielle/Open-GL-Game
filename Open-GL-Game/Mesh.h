@@ -3,6 +3,7 @@
 #include "glad/glad.h"
 #include <cstddef>
 #include "../Maths/Vector3.h"
+#include <algorithm>
 
 struct Vector2 {
     float x, y;
@@ -27,15 +28,43 @@ struct Vertex {
 class Mesh
 {
     unsigned int VAO;
-    size_t vertexCount;
+    int vertexCount;
+
+    const static Vertex quadVertices[6]; 
+    const static Vertex triangleVertices[3]; // NEW: declare vertices
+    static Mesh* quadMesh;
+    static Mesh* triangleMesh;// NEW: declare quadMesh
+    const static Vertex cubeVertices[36];
+    static Mesh* cubeMesh;
+   
 public:
 
-    void render() {
+    // public static method to create a quad mesh
+    static const Mesh* createQuad() { // NEW: function to create (or get) a quad mesh
+        if (quadMesh == nullptr) { // NEW: initialize, if not happened, yet
+            quadMesh = new Mesh{ Mesh::quadVertices, std::size(Mesh::quadVertices) };
+        }
+        return quadMesh; // NEW: return quad mesh
+    }
+    static const Mesh* createTriangle() { // NEW: function to create (or get) a quad mesh
+        if (triangleMesh == nullptr) { // NEW: initialize, if not happened, yet
+            triangleMesh = new Mesh{ Mesh::triangleVertices, std::size(Mesh::triangleVertices) };
+        }
+        return triangleMesh; // NEW: return quad mesh
+    }
+
+    static const Mesh* createCube() { // NEW: function to create (or get) a quad mesh
+        if (!cubeMesh) { // NEW: initialize, if not happened, yet
+            cubeMesh = new Mesh{ Mesh::cubeVertices, std::size(Mesh::cubeVertices) };
+        }
+        return cubeMesh; // NEW: return quad mesh
+    }
+    void render() const {
         glBindVertexArray(VAO);
         glDrawArrays(GL_TRIANGLES, 0, vertexCount);
     }
 
-    Mesh(Vertex* vertices, size_t count) {
+    Mesh(const Vertex* vertices, size_t count) {
         vertexCount = count;
         // ----- Create Vertex Array Object, which makes changing between VBOs easier -----
         glGenVertexArrays(1, &VAO);
